@@ -1,0 +1,1440 @@
+{
+	"info": {
+		"_postman_id": "6bf73fb4-e846-4771-af34-125ba266e9c5",
+		"name": "Dummy API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28305321"
+	},
+	"item": [
+		{
+			"name": "Get user without auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "app-id",
+						"value": "64a2a5d66fa5596da61d6888",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{BASE_URL}}/user",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"user"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10",
+							"disabled": true
+						},
+						{
+							"key": "page",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"ms\");\r",
+							"});\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.value).to.eql(100);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "app-id",
+						"value": "64a2a5d66fa5596da61d6888",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{BASE_URL}}/user",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"user"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10",
+							"disabled": true
+						},
+						{
+							"key": "page",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user list with paging",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var expectedLimit = pm.environment.get(\"limit\");\r",
+							"var expectedPage = pm.environment.get(\"page\");\r",
+							"\r",
+							"\r",
+							"pm.test(\"Limit is correct\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var actualLimit = jsonData.limit\r",
+							"    pm.expect((actualLimit)).to.eql(parseInt(expectedLimit));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Page number is correct\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var actualPage = jsonData.page\r",
+							"    pm.expect(String (actualPage)).to.eql(expectedPage);\r",
+							"});\r",
+							"\r",
+							"    var jsonData = pm.response.json();\r",
+							"var schema = {\r",
+							"    \"type\":\"object\",\r",
+							"    \"properties\":{\r",
+							"        \"data\":{\r",
+							"            \"type\":\"array\",\r",
+							"            \"items\":{\r",
+							"                \"type\":\"object\",\r",
+							"                \"properties\":{\r",
+							"                    \"id\":{\r",
+							"                        \"type\": \"string\"\r",
+							"                    },\r",
+							"                    \"title\":{\r",
+							"                       \"type\": \"string\" \r",
+							"                    },\r",
+							"                    \"firstName\":{\r",
+							"                        \"type\": \"string\"\r",
+							"                    },\r",
+							"                    \"lastName\":{\r",
+							"                        \"type\": \"string\"\r",
+							"                    },\r",
+							"                    \"picture\":{\r",
+							"                        \"type\": \"string\"\r",
+							"                    }\r",
+							"                }\r",
+							"            }\r",
+							"         \r",
+							"        },\r",
+							"        \"total\":{\r",
+							"            \"type\": \"integer\"\r",
+							"        },\r",
+							"        \"page\":{\r",
+							"            \"type\": \"integer\"\r",
+							"        },\r",
+							"        \"limit\":{\r",
+							"            \"type\": \"integer\"\r",
+							"        }\r",
+							"    }\r",
+							"};\r",
+							"\r",
+							"\r",
+							"pm.test('Schema is valid', function () {\r",
+							"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+							"\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "app-id",
+						"value": "64a2a5d66fa5596da61d6888",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{BASE_URL}}/user?limit={{limit}}&page={{page}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"user"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "{{limit}}"
+						},
+						{
+							"key": "page",
+							"value": "{{page}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"userId\", pm.response.json().id);\r",
+							"\r",
+							"\r",
+							"var jsonDataRequest = JSON.parse(pm.request.body);\r",
+							"var requestFirstName = jsonDataRequest.firstName;\r",
+							"var requestLastName = jsonDataRequest.lastName;\r",
+							"var requestEmail = jsonDataRequest.email;\r",
+							"\r",
+							"\r",
+							"pm.test(\"First Name matched\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var responseFirstName = jsonData.firstName;\r",
+							"    pm.expect(responseFirstName).to.eql(requestFirstName);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"// LastName\r",
+							"\r",
+							"pm.test(\"Last Name matched\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var responseLastName = jsonData.lastName;\r",
+							"    pm.expect(responseLastName).to.eql(requestLastName);\r",
+							"});\r",
+							"\r",
+							"// email\r",
+							"\r",
+							"pm.test(\"Email matched\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var responseEmail = jsonData.email;\r",
+							"    pm.expect(responseEmail).to.eql(requestEmail);\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"sendedFirstName\", requestFirstName)\r",
+							"pm.environment.set(\"sendedLastName\", requestLastName)\r",
+							"pm.environment.set(\"sendedEmail\", requestEmail)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "app-id",
+						"value": "64a2a5d66fa5596da61d6888",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"lastName\": \"{{$randomLastName}}\",\r\n    \"firstName\": \"{{$randomFirstName}}\",\r\n    \"email\": \"{{$randomEmail}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/user/create",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"user",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// check that firstNmae from request in Create user and firstName from response in Get user by id is the same\r",
+							"console.log(\"Text from Tests\")\r",
+							"pm.test(\"First Name is the same from request while creating user\", function () {\r",
+							"    var jsonDataResponse = pm.response.json();\r",
+							"    var firstNameFromGet = jsonDataResponse.firstName;\r",
+							"    var firstNameFromCreating = pm.environment.get(\"firstNameFromPreReq\");\r",
+							"    pm.expect(firstNameFromGet).to.eql(firstNameFromCreating);\r",
+							"});\r",
+							"\r",
+							"// LastName\r",
+							"\r",
+							"pm.test(\"Last Name is the same from request while creating user\", function () {\r",
+							"    var jsonDataResponse = pm.response.json();\r",
+							"    var lastNameFromGet = jsonDataResponse.lastName;\r",
+							"    var lastNameFromCreating = pm.environment.get(\"lastNameFromPreReq\");\r",
+							"    pm.expect(lastNameFromGet).to.eql(lastNameFromCreating);\r",
+							"});\r",
+							"\r",
+							"// Email\r",
+							"\r",
+							"pm.test(\"Email is the same from request while creating user\", function () {\r",
+							"    var jsonDataResponse = pm.response.json();\r",
+							"    var EmailFromGet = jsonDataResponse.email;\r",
+							"    var EmailFromCreating = pm.environment.get(\"emailFromPreReq\");\r",
+							"    pm.expect(EmailFromGet).to.eql(EmailFromCreating.toLowerCase());\r",
+							"});\r",
+							"\r",
+							"//schema validation for Get user by id\r",
+							"var jsonData = pm.response.json();\r",
+							"var schema = {\r",
+							"        \"type\":\"object\",\r",
+							"    \"properties\":{\r",
+							"        \"id\":{\r",
+							"            \"type\": \"string\"\r",
+							"    },\r",
+							"         \"firstName\":{\r",
+							"            \"type\": \"string\"\r",
+							"    },   \r",
+							"        \"lastName\":{\r",
+							"            \"type\": \"string\"\r",
+							"    },    \r",
+							"        \"email\":{\r",
+							"            \"type\": \"string\"\r",
+							"    },    \r",
+							"        \"registerDate\":{\r",
+							"            \"type\": \"string\"\r",
+							"    },    \r",
+							"        \"updateDate\":{\r",
+							"            \"type\": \"string\"\r",
+							"    },\r",
+							"    }   \r",
+							"//   \"required\":[\"id\", \"firstName\", \"lastName\", \"email\", \"registerDate\", \"updateDate\"];\r",
+							"};\r",
+							"\r",
+							"\r",
+							"pm.test('Schema is valid', function () {\r",
+							"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"console.log(\"Text from pre-request\")\r",
+							"const email = \"sadsfasfslgjjkh\"+Math.floor(Math.random()*10000)+\"@gmail.com\"\r",
+							"console.log(email)\r",
+							"\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"url: \"https://dummyapi.io/data/v1/user/create\",\r",
+							"method: \"POST\",\r",
+							"header: {\"Content-Type\": \"application/json\",\r",
+							"\"app-id\":\"64a2a5d66fa5596da61d6888\"},\r",
+							"body: {\r",
+							"   mode: 'raw',\r",
+							"   raw:JSON.stringify({\r",
+							"       \"firstName\": \"Fredery\",\r",
+							"       \"lastName\": \"Hills\",\r",
+							"       \"email\" : email\r",
+							"      })}  },\r",
+							"function (err, response) { \r",
+							"   var jsonDataResponse = response.json()\r",
+							"   console.log(jsonDataResponse.id)\r",
+							"    pm.environment.set(\"userId\", jsonDataResponse.id);\r",
+							"    pm.environment.set(\"firstNameFromPreReq\", jsonDataResponse.firstName);\r",
+							"    pm.environment.set(\"lastNameFromPreReq\", jsonDataResponse.lastName);\r",
+							"    pm.environment.set(\"emailFromPreReq\", jsonDataResponse.email);\r",
+							"    });\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "app-id",
+						"value": "64a2a5d66fa5596da61d6888",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{BASE_URL}}/user/{{userId}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"user",
+						"{{userId}}"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10",
+							"disabled": true
+						},
+						{
+							"key": "page",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user by id",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "app-id",
+						"value": "64a2a5d66fa5596da61d6888",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"lastName\": \"Smith\",\r\n    \"firstName\": \"John\",\r\n    \"email\": \"test1test@test.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/user/create",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"user",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user with same email",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//Create user with the same email\r",
+							"\r",
+							"const email = \"sadsfasfslgjjkh\"+Math.floor(Math.random()*10000)+\"@gmail.com\"\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"url: \"https://dummyapi.io/data/v1/user/create\",\r",
+							"method: \"POST\",\r",
+							"header: {\"Content-Type\": \"application/json\",\r",
+							"\"app-id\":\"64a2a5d66fa5596da61d6888\"},\r",
+							"body: {\r",
+							"   mode: 'raw',\r",
+							"   raw:JSON.stringify({\r",
+							"       \"firstName\": \"Fredery\",\r",
+							"       \"lastName\": \"Hills\",\r",
+							"       \"email\" : email\r",
+							"      })}  },\r",
+							"function (err, response) { \r",
+							"   var jsonDataResponse = response.json()\r",
+							"   console.log(jsonDataResponse.id)\r",
+							"    pm.environment.set(\"emailRandom\", jsonDataResponse.email);\r",
+							"    });\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "app-id",
+						"value": "64a2a5d66fa5596da61d6888",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"lastName\": \"Smith\",\r\n    \"firstName\": \"John\",\r\n    \"email\": \"{{emailRandom}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/user/create",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"user",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonDataResponse = pm.response.json();\r",
+							"\r",
+							"var newLastName = jsonDataResponse.lastName;\r",
+							"var oldLastName = pm.environment.get(\"lastNameFromPreReq\");\r",
+							"\r",
+							"pm.test(\"Last name has updated\", function () { \r",
+							"    pm.expect(newLastName).to.not.eql(oldLastName);\r",
+							"});\r",
+							"\r",
+							"//Update first name\r",
+							"\r",
+							"var newFirstName = jsonDataResponse.firstName;\r",
+							"var oldFirstName = pm.environment.get(\"firstNameFromPreReq\");\r",
+							"\r",
+							"pm.test(\"First name has updated\", function () { \r",
+							"    pm.expect(newFirstName).to.not.eql(oldFirstName);\r",
+							"});\r",
+							"\r",
+							"// email is forbiden to update\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"console.log(\"Text from pre-request\")\r",
+							"const email = \"sadsfasfslgjjkh\"+Math.floor(Math.random()*10000)+\"@gmail.com\"\r",
+							"console.log(email)\r",
+							"\r",
+							"\r",
+							"pm.sendRequest({\r",
+							"url: \"https://dummyapi.io/data/v1/user/create\",\r",
+							"method: \"POST\",\r",
+							"header: {\"Content-Type\": \"application/json\",\r",
+							"\"app-id\":\"64a2a5d66fa5596da61d6888\"},\r",
+							"body: {\r",
+							"   mode: 'raw',\r",
+							"   raw:JSON.stringify({\r",
+							"       \"firstName\": \"Fredery\",\r",
+							"       \"lastName\": \"Hills\",\r",
+							"       \"email\" : email\r",
+							"      })}  },\r",
+							"function (err, response) { \r",
+							"   var jsonDataResponse = response.json()\r",
+							"   console.log(jsonDataResponse.id)\r",
+							"    pm.environment.set(\"userId\", jsonDataResponse.id);\r",
+							"    pm.environment.set(\"firstNameFromPreReq\", jsonDataResponse.firstName);\r",
+							"    pm.environment.set(\"lastNameFromPreReq\", jsonDataResponse.lastName);\r",
+							"    pm.environment.set(\"emailFromPreReq\", jsonDataResponse.email);\r",
+							"    });\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "app-id",
+						"value": "64a2a5d66fa5596da61d6888",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"lastName\": \"Ojjo\",\r\n    \"firstName\": \"Ivan\",\r\n    \"email\": \"uewuewuiweiewi@gmail2.com\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/user/{{userId}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"user",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "app-id",
+						"value": "64a2a5d66fa5596da61d6888",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/user/{{userId}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"user",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user after delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "app-id",
+						"value": "64a2a5d66fa5596da61d6888",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"lastName\": \"Black\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/user/64a52d763becdf8306fe682e",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"user",
+						"64a52d763becdf8306fe682e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete invalid user",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "app-id",
+						"value": "64a2a5d66fa5596da61d6888",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"lastName\": \"Black\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/user/64a52d763becdf8306fe682e64a52d763becdf8306fe682e",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"user",
+						"64a52d763becdf8306fe682e64a52d763becdf8306fe682e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get post list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"var schema = {\r",
+							"   \"type\": \"object\",\r",
+							"   \"properties\": {\r",
+							"       \"data\":{\r",
+							"           \"type\": \"array\",\r",
+							"          \"items\": {\r",
+							"              \"type\": \"object\",\r",
+							"              \"properties\": {\r",
+							"                  \"id\":{\r",
+							"                      \"type\": \"string\"\r",
+							"                  },\r",
+							"                  \"image\": {\r",
+							"                      \"type\": \"string\"\r",
+							"                  },\r",
+							"                  \"likes\": {\r",
+							"                      \"type\": \"integer\"\r",
+							"                  },\r",
+							"                  \"tags\": {\r",
+							"                      \"type\": \"array\"\r",
+							"                  },\r",
+							"                  \"text\": {\r",
+							"                      \"type\": \"string\"\r",
+							"                  },\r",
+							"                  \"publishDate\": {\r",
+							"                      \"type\": \"string\"\r",
+							"                  },\r",
+							"                  \"updatedDate\": {\r",
+							"                      \"type\": \"string\"\r",
+							"},\r",
+							"                  \"owner\": {\r",
+							"                      \"type\":\"object\",\r",
+							"                      \"properties\": {\r",
+							"                          \"id\": {\r",
+							"                              \"type\": \"string\"\r",
+							"                          },\r",
+							"                          \"firstName\": {\r",
+							"                              \"type\": \"string\"\r",
+							"                          },\r",
+							"                          \"lastName\": {\r",
+							"                              \"type\": \"string\"\r",
+							"                          }\r",
+							"                      },\r",
+							"                      \"total\": {\r",
+							"                          \"type\": \"integer\"\r",
+							"                      },\r",
+							"                      \"page\": {\r",
+							"                          \"type\": \"integer\"\r",
+							"                      },\r",
+							"                      \"limit\": {\r",
+							"                          \"type\": \"integer\"\r",
+							"                      }\r",
+							"\r",
+							"                  },\r",
+							"              },\r",
+							"          }\r",
+							"},\r",
+							"       \"total\": {\r",
+							"           \"type\": \"integer\"\r",
+							"       },\r",
+							"       \"page\": {\r",
+							"           \"type\": \"integer\"\r",
+							"       },\r",
+							"       \"limit\": {\r",
+							"           \"type\": \"integer\"\r",
+							"       }\r",
+							"   },\r",
+							"   \"required\": [\"data\", \"total\", \"page\", \"limit\"]\r",
+							"};\r",
+							"\r",
+							"\r",
+							"pm.test('Schema is valid', function () {\r",
+							"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "app-id",
+						"value": "64a2a5d66fa5596da61d6888",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{BASE_URL}}/post",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"post"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10",
+							"disabled": true
+						},
+						{
+							"key": "page",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get post list with params",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "app-id",
+						"value": "64a2a5d66fa5596da61d6888",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{BASE_URL}}/post?limit=5&page=2",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"post"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "5"
+						},
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get List By User",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "app-id",
+						"value": "64a2a5d66fa5596da61d6888",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{BASE_URL}}/user/60d0fe4f5311236168a109e3/post",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"user",
+						"60d0fe4f5311236168a109e3",
+						"post"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "5",
+							"disabled": true
+						},
+						{
+							"key": "page",
+							"value": "2",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get List By Tag",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "app-id",
+						"value": "64a2a5d66fa5596da61d6888",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{BASE_URL}}/tag/60d0fe4f5311236168a109e3/post",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"tag",
+						"60d0fe4f5311236168a109e3",
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Post by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//validation schema Get post by id\r",
+							"var jsonData = pm.response.json();\r",
+							" var schema = {\r",
+							"     \"type\": \"object\",\r",
+							"     \"properties\":{\r",
+							"                 \"type\": \"object\",\r",
+							"                 \"properties\": {\r",
+							"                     \"id\": {\r",
+							"                         \"type\": \"string\"\r",
+							"                     },\r",
+							"                     \"image\": {\r",
+							"                         \"type\": \"string\"\r",
+							"                     },\r",
+							"                     \"likes\": {\r",
+							"                         \"types\": \"integer\"\r",
+							"                     },\r",
+							"                     \"link\": {\r",
+							"                         \"type\": \"string\"\r",
+							"                     },\r",
+							"                      \"tags\": {\r",
+							"                         \"type\": \"array\",\r",
+							"                         \"properties\": {\r",
+							"                                 \"type\": \"string\"\r",
+							"                         }\r",
+							"                      },\r",
+							"\"text\": {\r",
+							"                         \"type\": \"string\"\r",
+							"                     },\r",
+							"                     \"publishDate\": {\r",
+							"                         \"type\": \"string\"\r",
+							"                     },\r",
+							"                     \"owner\": {\r",
+							"                         \"type\": \"object\",\r",
+							"                         \"properties\": {\r",
+							"                             \"id\":{\r",
+							"                                 \"type\": \"string\"\r",
+							"                             },\r",
+							"                             \"title\": {\r",
+							"                                 \"type\": \"string\"\r",
+							"                             },\r",
+							"                             \"firstName\": {\r",
+							"                                 \"type\": \"string\"\r",
+							"                             },\r",
+							"                             \"lastName\": {\r",
+							"                                 \"type\": \"string\"\r",
+							"                             },\r",
+							"                             \"picture\": {\r",
+							"                                 \"type\": \"string\"\r",
+							"                             },\r",
+							"                         }\r",
+							"                     }\r",
+							"                 }\r",
+							"             }\r",
+							"         }\r",
+							"pm.test('Schema is valid', function () {\r",
+							"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+							"  \r",
+							"});         "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "app-id",
+						"value": "64a2a5d66fa5596da61d6888",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{BASE_URL}}/post/60d21afd67d0d8992e610bad",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"post",
+						"60d21afd67d0d8992e610bad"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user for post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"userIdForPost\", pm.response.json().id);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "app-id",
+						"value": "64a2a5d66fa5596da61d6888",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"lastName\": \"{{$randomLastName}}\",\r\n    \"firstName\": \"{{$randomFirstName}}\",\r\n    \"email\": \"{{$randomEmail}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/user/create",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"user",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"PostId\", pm.response.json().id);\r",
+							"\r",
+							"\r",
+							"var jsonDateRequest = JSON.parse(pm.request.body);\r",
+							"var requestText = jsonDateRequest.text;\r",
+							"\r",
+							"pm.test(\"Text is matched\", function() {\r",
+							"    var jsonDataResponse = pm.response.json();\r",
+							"    var responseText = jsonDataResponse.text;\r",
+							"    pm.expect(responseText).to.eql(requestText);\r",
+							"\r",
+							"});\r",
+							"\r",
+							"// owener id from request equals to owner id from response\r",
+							"\r",
+							"var jsonDateRequest = JSON.parse(pm.request.body);\r",
+							"var requestOwner = jsonDateRequest.owner;\r",
+							"\r",
+							"pm.test(\"OwnerId is matched\", function() {\r",
+							"    var jsonDataResponse = pm.response.json();\r",
+							"    var responseOwner = jsonDataResponse.owner.id;\r",
+							"    pm.expect(responseOwner).to.eql(requestOwner);\r",
+							"\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "app-id",
+						"value": "64a2a5d66fa5596da61d6888",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"text\": \"Hello\",\r\n\"owner\": \"{{userIdForPost}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/post/create",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"post",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// likes value updeted successfully\r",
+							"\r",
+							"var jsonDateRequest = JSON.parse(pm.request.body);\r",
+							"var requestLikes = jsonDateRequest.likes;\r",
+							"\r",
+							"pm.test(\"Likes value updeted successfully\", function() {\r",
+							"    var jsonDataResponse = pm.response.json();\r",
+							"    var responseLikes = jsonDataResponse.likes;\r",
+							"    pm.expect(responseLikes).to.eql(requestLikes);\r",
+							"\r",
+							"});\r",
+							"\r",
+							"// id value could not be updated\r",
+							"var requestId = JSON.parse(pm.request.body).id;\r",
+							"pm.test(\"id value could not be updated\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var responseId = jsonData.id;\r",
+							"    pm.expect(requestId).not.to.eql(responseId);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "app-id",
+						"value": "64a2a5d66fa5596da61d6888",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"likes\": 50\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/post/{{PostId}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"post",
+						"{{PostId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// id from response equals to id from URI\r",
+							"var postIdFromURI = pm.environment.get(\"postId\");\r",
+							"\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var responseId = jsonData.id;\r",
+							"    pm.expect(responseId).to.eql(postIdFromURI);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "app-id",
+						"value": "64a2a5d66fa5596da61d6888",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/post/{{PostId}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"post",
+						"{{PostId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user for comment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"userIdForPost\", pm.response.json().id);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "app-id",
+						"value": "64a2a5d66fa5596da61d6888",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"lastName\": \"{{$randomLastName}}\",\r\n    \"firstName\": \"{{$randomFirstName}}\",\r\n    \"email\": \"{{$randomEmail}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/user/create",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"user",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get comment List",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "app-id",
+						"value": "64a2a5d66fa5596da61d6888",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"likes\": 50\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/comment",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"comment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get comment List By Post",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "app-id",
+						"value": "64a2a5d66fa5596da61d6888",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"likes\": 50\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/post/60d21b2c67d0d8992e610c37/comment",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"post",
+						"60d21b2c67d0d8992e610c37",
+						"comment"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "64a2a5d66fa5596da61d6888",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "app-id",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
